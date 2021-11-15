@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PistolBullet : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
-    public Vector3 direction;
-    [SerializeField] private float speed;
-    [SerializeField] private int damage;
-    [SerializeField] private int headShotDamageScale;
+    [HideInInspector] public Vector3 direction;
+    [HideInInspector] public float speed;
+    [HideInInspector] public int damage;
+    [HideInInspector] public int headShotDamageScale;
     private Transform _transform;
 
     private void Start() 
@@ -21,7 +21,7 @@ public class PistolBullet : MonoBehaviour
         _transform.position += direction * speed * Time.deltaTime;
     }
 
-    private void OnTriggerEnter(Collider other) 
+    protected virtual void OnTriggerEnter(Collider other) 
     {
         if(other.CompareTag("Head"))
         {

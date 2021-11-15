@@ -8,36 +8,36 @@ public class PlayerFight : MonoBehaviour
     [SerializeField] private MenuFunctional menuFunctional;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private PlayerMovement playerMovement; 
-    [SerializeField] private GameObject bulletPref;
-    [SerializeField] private Transform pistolPoint;
+    [SerializeField] private Transform weaponPoint;
+    [SerializeField] private GameObject startWeapon;
     [SerializeField] private LayerMask ignoreLayer;
-    [SerializeField] private float attackRate;
-    private bool canShoot = true;
+    private Weapon weaponInHand;
+
+    private void Start() 
+    {
+        TakeWeapon(startWeapon);
+    }
 
     private void Update() 
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             RaycastHit hit;
-            if(canShoot)
+            if(weaponInHand.canShoot)
             {
                 Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 if(Physics.Raycast(ray, out hit, 100, ignoreLayer))
-                    StartCoroutine(Shoot(hit.point));
+                    StartCoroutine(weaponInHand.Shoot(hit.point));
                 else
-                    StartCoroutine(Shoot(ray.direction * 100));
+                    StartCoroutine(weaponInHand.Shoot(ray.direction * 100));
             }
         }
     }
 
-    private IEnumerator Shoot(Vector3 targetPosition)
+    public void TakeWeapon(GameObject weapon)
     {
-        canShoot = false;
-        Quaternion bulletRotate = Quaternion.LookRotation(targetPosition - pistolPoint.position);
-        PistolBullet bullet = Instantiate(bulletPref, pistolPoint.position, bulletRotate).GetComponent<PistolBullet>();
-        bullet.direction = (targetPosition - pistolPoint.position).normalized;
-        yield return new WaitForSeconds(attackRate);
-        canShoot = true;
+        weaponInHand = Instantiate(startWeapon, weaponPoint.position, weaponPoint.rotation).GetComponent<Weapon>();
+        weaponInHand.transform.SetParent(weaponPoint);
     }
 
     public void TakeDamage()

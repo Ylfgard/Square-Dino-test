@@ -5,9 +5,9 @@ using UnityEngine;
 public class LevelStageHandler : MonoBehaviour
 {
     
-    public bool isFinalStage = false;
+    [HideInInspector] public bool isFinalStage = false;
     public PlayerMovement playerMovement;
-    public List<EnemyState> curEnemys = new List<EnemyState>();
+    [HideInInspector] public List<EnemyState> curEnemys = new List<EnemyState>();
     [SerializeField] private MenuFunctional menuFunctional; 
     [SerializeField] private LevelStageKeeper levelStageKeeper;
 

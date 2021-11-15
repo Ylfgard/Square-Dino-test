@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyState : MonoBehaviour
 {
-    public LevelStageKeeper keeper;
-    public LevelStageHandler handler;
-    public Transform playerTransf;
-    public int stageIndex;
+    [HideInInspector] public LevelStageKeeper keeper;
+    [HideInInspector] public LevelStageHandler handler;
+    [HideInInspector] public Transform playerTransf;
+    [HideInInspector] public int stageIndex;
     [SerializeField] private EnemyBehavior behavior; 
     [SerializeField] private Collider hitCollider; 
     [SerializeField] private Rigidbody[] ragdollRB;

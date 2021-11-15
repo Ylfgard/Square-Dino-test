@@ -1757,13 +1757,12 @@ MonoBehaviour:
   menuFunctional: {fileID: 0}
   mainCamera: {fileID: 0}
   playerMovement: {fileID: 8856878694071592917}
-  bulletPref: {fileID: 5481131208548253871, guid: 5e2a1164dc632754fb8914ce621c95c7,
+  weaponPoint: {fileID: 5128440984075757568}
+  startWeapon: {fileID: 3081774601074851423, guid: 9c5a31c8905da5143b6c3d2e482b2792,
     type: 3}
-  pistolPoint: {fileID: 5128440984075757568}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 503
-  attackRate: 0.5
 --- !u!1 &2334621051804415358
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,14 +2027,16 @@ PrefabInstance:
     - target: {fileID: 6559421007698134970, guid: b8a89d433330f774c92de926e1a1e20e,
         type: 3}
       propertyPath: m_Name
-      value: Pistol
+      value: WeaponPoint
       objectReference: {fileID: 0}
     - target: {fileID: 6559421007698134970, guid: b8a89d433330f774c92de926e1a1e20e,
         type: 3}
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7342506156534608291, guid: b8a89d433330f774c92de926e1a1e20e, type: 3}
+    - {fileID: 6385125729194120181, guid: b8a89d433330f774c92de926e1a1e20e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b8a89d433330f774c92de926e1a1e20e, type: 3}
 --- !u!4 &5128440984075757568 stripped
 Transform:

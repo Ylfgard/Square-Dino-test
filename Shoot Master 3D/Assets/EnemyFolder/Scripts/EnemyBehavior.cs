@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public bool canAttack = false;
+    [HideInInspector] public bool canAttack = false;
     public Animator animator;
     public NavMeshAgent navAgent;
     [SerializeField] private EnemyState state; 

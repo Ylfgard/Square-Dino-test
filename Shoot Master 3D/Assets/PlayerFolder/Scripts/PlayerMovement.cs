@@ -6,8 +6,8 @@ using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public UnityEvent onPosition;
-    public Transform lookAtPoint;
+    [HideInInspector] public UnityEvent onPosition;
+    [HideInInspector] public Transform lookAtPoint;
     public Animator animator;
     [SerializeField] private NavMeshAgent navAgent;
     [SerializeField] private Transform _transform;
