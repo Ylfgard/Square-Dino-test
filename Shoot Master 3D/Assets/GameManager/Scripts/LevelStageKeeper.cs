@@ -20,13 +20,13 @@ public class LevelStageKeeper : MonoBehaviour
                 LoadEnemy(enemyPoint, i);
     }
 
-    public void GetLevelStage(out Transform[] wayPoints)
+    public void GetLevelStage(out Transform[] wayPoints, out Transform lookAtPoint)
     {
         wayPoints = levelStages[curLevelStageIndex].wayPoints;
+        lookAtPoint = levelStages[curLevelStageIndex].lookAtPoint;
         int limit = curLevelStageIndex + stageCountEnemyPreload + 1;
         if(limit < levelStages.Length) 
         {
-            Debug.Log("Spawn");
             foreach(Transform enemyPoint in levelStages[limit].enemyPositions)
                 LoadEnemy(enemyPoint, limit);
         }
@@ -37,7 +37,7 @@ public class LevelStageKeeper : MonoBehaviour
             if(enemy.stageIndex == curLevelStageIndex)
             {
                 handler.curEnemys.Add(enemy);
-                handler.playerMovement.onPosition.AddListener(enemy.GetComponent<EnemyBehavior>().StartFight);
+                handler.playerMovement.onPosition.AddListener(enemy.GetComponentInParent<EnemyBehavior>().StartFight);
             }
         }
 
@@ -49,7 +49,7 @@ public class LevelStageKeeper : MonoBehaviour
     private void LoadEnemy(Transform enemyPoint, int stageIndex)
     {
         Quaternion rotate = Quaternion.LookRotation(handler.playerMovement.transform.position, handler.playerMovement.transform.position);
-        EnemyState enemy = Instantiate(enemyPrefab, enemyPoint.position, rotate).GetComponent<EnemyState>();
+        EnemyState enemy = Instantiate(enemyPrefab, enemyPoint.position, rotate).GetComponentInChildren<EnemyState>();
         enemy.stageIndex = stageIndex;
         enemy.keeper = this;
         loadedEnemys.Add(enemy);
@@ -79,4 +79,5 @@ public struct LevelStage
 {
     public Transform[] wayPoints;
     public Transform[] enemyPositions;
+    public Transform lookAtPoint;
 }

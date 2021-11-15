@@ -47,6 +47,7 @@ MonoBehaviour:
   isFinalStage: 0
   playerMovement: {fileID: 0}
   curEnemys: []
+  menuFunctional: {fileID: 0}
   levelStageKeeper: {fileID: 1991117411}
 --- !u!114 &1991117411
 MonoBehaviour:
@@ -65,7 +66,9 @@ MonoBehaviour:
     - {fileID: 0}
     enemyPositions:
     - {fileID: 0}
+    lookAtPoint: {fileID: 0}
   - wayPoints:
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -73,19 +76,23 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    lookAtPoint: {fileID: 0}
   - wayPoints:
-    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     enemyPositions:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    lookAtPoint: {fileID: 0}
   - wayPoints:
     - {fileID: 0}
     enemyPositions: []
+    lookAtPoint: {fileID: 0}
   handler: {fileID: 7174809692395606063}
   enemyPrefab: {fileID: 6741849969180974180, guid: 7857095b503df424aa02ac7f8d93b533,
     type: 3}
-  stageCountEnemyPreload: 1
+  stageCountEnemyPreload: 0
   loadedEnemys: []

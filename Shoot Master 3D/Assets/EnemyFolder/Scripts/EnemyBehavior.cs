@@ -6,37 +6,48 @@ using UnityEngine.AI;
 public class EnemyBehavior : MonoBehaviour
 {
     public bool canAttack = false;
-    [SerializeField] NavMeshAgent navAgent;
+    public Animator animator;
+    public NavMeshAgent navAgent;
     [SerializeField] private EnemyState state; 
     [SerializeField] private int health;
 
     private void Start()
     {
         canAttack = false;
+        state.RagdollChangeState(false);
     }
 
     public void StartFight()
     {
-        canAttack = true;
-        navAgent.SetDestination(state.playerTransf.position);
+        StartCoroutine(RandomDelayedWalk());
     }
+
+    private IEnumerator RandomDelayedWalk()
+    {
+        yield return new WaitForSeconds(Random.Range(0, 1.5f));
+        canAttack = true;
+        animator.SetBool("Walk", true);
+        navAgent.SetDestination(state.playerTransf.position);
+    } 
 
     private void Update()
     {
         if(canAttack && Vector3.Distance(navAgent.nextPosition, navAgent.destination) <= navAgent.stoppingDistance)
-            Attack();
+        {
+            animator.SetBool("Walk", false);
+            canAttack = false;
+            animator.SetTrigger("Attack");
+        }
     }
 
-    private void Attack()
+    public void Attack()
     {
-        canAttack = false;
         state.playerTransf.GetComponent<PlayerFight>().TakeDamage();
     } 
     
     public void TakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log(health);
         if(health < 1)
             state.Death();
     }

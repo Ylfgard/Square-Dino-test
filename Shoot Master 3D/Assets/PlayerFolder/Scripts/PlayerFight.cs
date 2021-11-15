@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerFight : MonoBehaviour
 {
+    [SerializeField] private MenuFunctional menuFunctional;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private PlayerMovement playerMovement; 
     [SerializeField] private GameObject bulletPref;
     [SerializeField] private Transform pistolPoint;
-    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private LayerMask ignoreLayer;
     [SerializeField] private float attackRate;
     private bool canShoot = true;
 
@@ -16,9 +19,13 @@ public class PlayerFight : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             RaycastHit hit;
-            if(canShoot && Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100, playerLayer))
+            if(canShoot)
             {
-                StartCoroutine(Shoot(hit.point));
+                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                if(Physics.Raycast(ray, out hit, 100, ignoreLayer))
+                    StartCoroutine(Shoot(hit.point));
+                else
+                    StartCoroutine(Shoot(ray.direction * 100));
             }
         }
     }
@@ -26,8 +33,8 @@ public class PlayerFight : MonoBehaviour
     private IEnumerator Shoot(Vector3 targetPosition)
     {
         canShoot = false;
-        Quaternion rotate = Quaternion.LookRotation(Vector3.up, targetPosition);
-        PistolBullet bullet = Instantiate(bulletPref, pistolPoint.position, rotate).GetComponent<PistolBullet>();
+        Quaternion bulletRotate = Quaternion.LookRotation(targetPosition - pistolPoint.position);
+        PistolBullet bullet = Instantiate(bulletPref, pistolPoint.position, bulletRotate).GetComponent<PistolBullet>();
         bullet.direction = (targetPosition - pistolPoint.position).normalized;
         yield return new WaitForSeconds(attackRate);
         canShoot = true;
@@ -35,7 +42,7 @@ public class PlayerFight : MonoBehaviour
 
     public void TakeDamage()
     {
-        Debug.Log("You died!");
-        Time.timeScale = 0;
+        playerMovement.animator.SetTrigger("Death");
+        StartCoroutine(menuFunctional.DelayedRestart());
     }
 }

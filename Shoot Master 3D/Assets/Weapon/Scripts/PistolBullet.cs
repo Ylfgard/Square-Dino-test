@@ -23,15 +23,17 @@ public class PistolBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        Debug.Log("Enter!");
         if(other.CompareTag("Head"))
         {
             other.GetComponentInParent<EnemyBehavior>().TakeDamage(damage * headShotDamageScale);
+            other.GetComponent<Rigidbody>().AddForce(direction * speed * 300);
         }
         else if(other.CompareTag("Body"))
         {
             other.GetComponentInParent<EnemyBehavior>().TakeDamage(damage);
+            other.GetComponent<Rigidbody>().AddForce(direction * speed * 100);
         }
+        
         gameObject.SetActive(false);
     }
 }
